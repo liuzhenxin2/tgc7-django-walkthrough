@@ -11,7 +11,7 @@
     <h1>Books</h1>
     <ul>
       {% for each_book in all_books %}
-      <li>{{each_book.title}}</li>
+      <li>{{each_book.title}} <a href="{% url 'update_book_route' book_id=each_book.id %}">Edit</a> </li>
       {% endfor %}
     </ul>
   </body>
