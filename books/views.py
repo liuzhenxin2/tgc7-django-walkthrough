@@ -104,3 +104,20 @@ def update_book(request, book_id):
         return render(request, 'books/update_book.template.html', {
             'form': form
         })
+
+
+# the second argument `book_id` is the id of the book
+# that we want to delete
+def delete_book(request, book_id):
+    if request.method == "POST":
+        book_to_delete = get_object_or_404(Book, pk=book_id)
+        book_to_delete.delete()
+        return redirect(reverse(index))
+    else:
+        # 1. fetch the book that we want to delete
+        book_to_delete = get_object_or_404(Book, pk=book_id)
+
+        # 2. ask for confirmation if we want to delete
+        return render(request, 'books/delete_book.template.html', {
+            'book': book_to_delete
+        })
