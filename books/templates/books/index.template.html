@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Books</h1>
+    <ul>
+      {% for each_book in all_books %}
+      <li>{{each_book.title}}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
