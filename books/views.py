@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
-from .models import Book, Publisher
-from .forms import BookForm, PublisherForm
+from .models import Book, Publisher, Author
+from .forms import BookForm, PublisherForm, AuthorForm
 # Create your views here.
 
 
@@ -21,6 +21,13 @@ def show_publisher(request):
     all_publishers = Publisher.objects.all()
     return render(request, "books/show_publishers.template.html", {
         'all_publishers': all_publishers
+    })
+
+
+def show_authors(request):
+    all_authors = Author.objects.all()
+    return render(request, "books/show_authors.template.html", {
+        'all_authors': all_authors
     })
 
 
@@ -59,8 +66,20 @@ def create_publisher(request):
         })
 
 
-def update_book(request, book_id):
+def create_author(request):
+    if request.method == "POST":
+        author_form = AuthorForm(request.POST)
+        if author_form.is_valid():
+            author_form.save()
+            return redirect(reverse(show_authors))
+    else:
+        author_form = AuthorForm()
+        return render(request, 'books/create_author.template.html', {
+            'form': author_form
+        })
 
+
+def update_book(request, book_id):
     if request.method == "POST":
         # 1. retrieve the book that is being updated
         book_being_updated = get_object_or_404(Book, pk=book_id)
