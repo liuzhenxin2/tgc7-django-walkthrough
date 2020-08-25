@@ -32,6 +32,7 @@ class Book(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    authors = models.ManyToManyField('Author')
 
     # to-string
     def __str__(self):
