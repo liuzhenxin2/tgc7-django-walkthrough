@@ -164,3 +164,6 @@ LOGIN_REDIRECT_URL = '/success'
 # set it such that whenevr django sends out an email, it will be
 # shown in the terminal instead
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+

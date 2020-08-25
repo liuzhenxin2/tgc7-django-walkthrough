@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect, reverse, get_object
 from .models import Book, Publisher, Author
 from .forms import BookForm, PublisherForm, AuthorForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Create your views here.
 
 
@@ -47,6 +48,7 @@ def create_book(request):
         # test if the form is valid
         if submitted_form.is_valid():
             submitted_form.save()
+            messages.success(request, f"New book {submitted_form.title} has been created")
             return redirect(reverse(index))
     else:
         # if user did not submit the data, just display the form
