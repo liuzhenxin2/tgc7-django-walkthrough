@@ -1,11 +1,12 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
 from .models import Book, Publisher, Author
 from .forms import BookForm, PublisherForm, AuthorForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
 def welcome(request):
-    return HttpResponse("welcome")
+    return render(request, 'books/welcome.template.html')
 
 
 def index(request):
@@ -15,6 +16,10 @@ def index(request):
     return render(request, "books/index.template.html", {
         'all_books': all_books
     })
+
+
+def success(request):
+    return render(request, 'books/login_success.template.html')
 
 
 def show_publisher(request):
@@ -31,6 +36,7 @@ def show_authors(request):
     })
 
 
+@login_required
 def create_book(request):
     # if the user submits the data
     if request.method == "POST":

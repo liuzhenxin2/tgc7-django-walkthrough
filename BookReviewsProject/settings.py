@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # our own apps
     'books'
 ]
 
@@ -122,3 +128,39 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # default login method (for logging into the admin backend)
+    'django.contrib.auth.backends.ModelBackend',
+
+    # allauth authentication system, such as login usning email
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
+
+SITE_ID = 1
+
+# allows the user to login/register via a username or email
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+# the user must specify an email address
+ACCOUNT_EMAIL_REQUIRED = True
+
+# whether the user must verify their email
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+# asks the user to enter their email twice
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+
+# minimal length of the user name
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+
+# the url to go to display the login page
+LOGIN_URL = '/accounts/login/'
+
+# the url to go to if the user has logged in successful
+LOGIN_REDIRECT_URL = '/success'
+
+
+# set it such that whenevr django sends out an email, it will be
+# shown in the terminal instead
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
