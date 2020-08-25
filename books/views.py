@@ -48,7 +48,7 @@ def create_book(request):
         # test if the form is valid
         if submitted_form.is_valid():
             submitted_form.save()
-            messages.success(request, f"New book {submitted_form.title} has been created")
+            messages.success(request, f"New book {submitted_form.cleaned_data['title']} has been created")
             return redirect(reverse(index))
     else:
         # if user did not submit the data, just display the form
