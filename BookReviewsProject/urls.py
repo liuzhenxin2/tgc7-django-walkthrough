@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import books.views
-import reviews.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +23,6 @@ urlpatterns = [
     path('books/', include('books.urls')),
     path('success/', books.views.success),
     path('', include('home.urls')),
-    path('reviews/', reviews.views.index),
+    path('reviews/', include('reviews.urls')),
   
 ]

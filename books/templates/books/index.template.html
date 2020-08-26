@@ -5,7 +5,8 @@
     <h1>Books</h1>
     <ul>
       {% for each_book in all_books %}
-      <li>{{each_book.title}} 
+      <li>
+      <a href="{% url 'book_details_route' book_id=each_book.id %}">{{each_book.title}}</a> 
             <a href="{% url 'update_book_route' book_id=each_book.id %}">Edit</a> 
             <a href="{% url 'delete_book_route' book_id=each_book.id %}">Delete</a>      
       </li>

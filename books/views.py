@@ -43,7 +43,12 @@ def create_book(request):
 
         # test if the form is valid
         if submitted_form.is_valid():
-            submitted_form.save()
+            # when commit=False is there, it means
+            # don't save to the database straightaway
+            book_model = submitted_form.save(commit=False)
+            book_model.owner = request.user
+            # manually save the model to the database
+            book_model.save()
             messages.success(
                 request, f"New book {submitted_form.cleaned_data['title']} has been created")
             return redirect(reverse(index))
@@ -53,6 +58,13 @@ def create_book(request):
         return render(request, "books/create_book.template.html", {
             'form': create_book_form
         })
+
+
+def view_book_details(request, book_id):
+    book_model = get_object_or_404(Book, pk=book_id)
+    return render(request, 'books/book_details.template.html', {
+        "book": book_model
+    })
 
 
 def create_publisher(request):

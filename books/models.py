@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -33,6 +33,8 @@ class Book(models.Model):
     tags = models.ManyToManyField(Tag)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     authors = models.ManyToManyField('Author')
+    owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+
 
     # to-string
     def __str__(self):
