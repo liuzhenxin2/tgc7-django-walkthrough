@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from books.models import Book
+from django.contrib.auth.models import User
 
 
 class Review(models.Model):
@@ -9,6 +10,7 @@ class Review(models.Model):
     content = models.TextField(blank=False)
     date = models.DateField(blank=False)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Review {self.title} for {self.book.title}"

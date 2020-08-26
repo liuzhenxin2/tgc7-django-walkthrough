@@ -35,7 +35,6 @@ class Book(models.Model):
     authors = models.ManyToManyField('Author')
     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
-
     # to-string
     def __str__(self):
         return self.title + " - " + self.ISBN

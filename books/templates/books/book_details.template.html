@@ -33,11 +33,12 @@
 </div>
 
 <h3>Reviews</h3>
+<a class="btn btn-primary" href="{% url 'create_review_route' book_id=book.id %}">Add</a>
 {% for r in book.review_set.all %}
 <div class="card">
   <div class="card-body">
     <div class="card-title">{{r.title}}</div>
-    <p>on {{r.date}}</p>
+    <p>on {{r.date}} by {{r.author.username}}</p>
     <div>
       {{r.content}}
     </div>
