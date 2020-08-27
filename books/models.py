@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
@@ -35,6 +36,7 @@ class Book(models.Model):
     authors = models.ManyToManyField('Author')
     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     page_count = models.IntegerField(blank=False)
+    cover = CloudinaryField()
 
     # to-string
     def __str__(self):
