@@ -1,6 +1,10 @@
-from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
+from django.shortcuts import (render,
+                              redirect,
+                              reverse,
+                              get_object_or_404
+                             )
 from .models import Book, Publisher, Author
-from .forms import BookForm, PublisherForm, AuthorForm
+from .forms import BookForm, PublisherForm, AuthorForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # Create your views here.
@@ -10,8 +14,10 @@ def index(request):
     # create a query set that has all the books
     # a query set is like a cursor
     all_books = Book.objects.all()
+    search_form = SearchForm
     return render(request, "books/index.template.html", {
-        'all_books': all_books
+        'all_books': all_books,
+        'search_form':SearchForm
     })
 
 

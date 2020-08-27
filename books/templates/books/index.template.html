@@ -1,7 +1,12 @@
 
 {% extends 'base.template.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
+    <h1>Search</h1>
+    <form method="GET">
+    {{search_form|crispy}}
+    <input type="submit" class="btn btn-primary"/>
+    </form>
     <h1>Books</h1>
     <ul>
       {% for each_book in all_books %}

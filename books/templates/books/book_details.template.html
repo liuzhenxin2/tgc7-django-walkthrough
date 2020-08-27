@@ -7,41 +7,34 @@
 {% block content %}
 
 <h1>{{book.title}}</h1>
-<div class="row">
-  <div class="col-3">
-    ISBN:
-  </div>
-  <div class="col">
-    {{book.ISBN}}
-  </div>
-</div>
-<div class="row">
-  <div class="col-3">
-    Authors:
-  </div>
-  <div class="col">
-    <ul>
-      {% for a in book.authors.all %}
-      <li>{{a.first_name}} {{a.last_name}}</li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="col-3">Category</div>
-  <div class="col">{{book.category.title}}</div>
-</div>
+
+{% include 'books/book_info.template.html'%}
 
 <h3>Reviews</h3>
 <a class="btn btn-primary" href="{% url 'create_review_route' book_id=book.id %}">Add</a>
 {% for r in book.review_set.all %}
 <div class="card">
   <div class="card-body">
-    <div class="card-title">{{r.title}}</div>
+    <div class="card-title">{{r.title}}</div>   
     <p>on {{r.date}} by {{r.author.username}}</p>
     <div>
       {{r.content}}
     </div>
+    <h4>Comments</h4>
+      <a href="{% url 'create_comment_route' review_id=r.id %}" class="btn btn-primary btn-sm">Leave a comment</a>
+    {%for c in r.comment_set.all %}
+    <div class="card ml-3">
+        <div class="card-body">
+        {{c.content}}
+        <p>
+            by {{c.author.username}} on {{c.date}}
+        </p>
+        {% if c.author == request.user %}
+        <a href="#">Edit</a>
+        {% endif %}
+        </div>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endfor %} 

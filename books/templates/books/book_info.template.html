@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-3">
+    ISBN:
+  </div>
+  <div class="col">
+    {{book.ISBN}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-3">
+    Authors:
+  </div>
+  <div class="col">
+    <ul>
+      {% for a in book.authors.all %}
+      <li>{{a.first_name}} {{a.last_name}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-3">Category</div>
+  <div class="col">{{book.category.title}}</div>
+</div>

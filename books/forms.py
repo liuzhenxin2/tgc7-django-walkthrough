@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book, Publisher, Author
+from .models import Book, Publisher, Author, Genre
 
 
 class BookForm(forms.ModelForm):
@@ -18,3 +18,8 @@ class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = "__all__"
+
+
+class SearchForm(forms.Form):
+    title = forms.CharField(max_length=100, required=False)
+    genre = forms.ModelChoiceField(queryset=Genre.objects.all(), required=False)

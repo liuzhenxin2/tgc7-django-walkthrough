@@ -14,3 +14,13 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review {self.title} for {self.book.title}"
+
+
+class Comment(models.Model):
+    content = models.TextField(blank=False)
+    date = models.DateField(blank=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Comment on {self.review.id} by {self.author.username}"

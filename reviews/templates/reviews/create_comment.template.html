@@ -1,0 +1,15 @@
+{% extends 'base.template.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<a href="{% url 'book_details_route' book_id=review.book.id%}" class="btn btn-primary">Back to Reviews<a/>
+
+<h1>Creating a comment for review: {{review.title}}</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy}}
+    <input type="submit" class="btn btn-primary"/>
+</form>
+
+{% endblock %}
