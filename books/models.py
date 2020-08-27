@@ -37,6 +37,7 @@ class Book(models.Model):
     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     page_count = models.IntegerField(blank=False)
     cover = CloudinaryField()
+    cost = models.DecimalField(max_digits=10, decimal_places=3, blank=False)
 
     # to-string
     def __str__(self):

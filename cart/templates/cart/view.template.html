@@ -1,0 +1,17 @@
+{% extends 'base.template.html' %}
+{% load cloudinary %}
+{% block content %}
+<h1>Cart Item</h1>
+<ul>
+{% for key, item in cart.items %}
+<li> 
+    {% cloudinary item.image class="book_cover" %}
+    {{item.title}} (${{item.cost}}) x {{item.qty}}
+    <a href="{% url 'remove_from_cart_route' book_id=item.id %}" class="btn btn-danger btn-sm">Remove</a>
+</li>
+{% endfor %}
+</ul>
+
+<h1>Total: ${{total}}</h1>
+
+{% endblock %}

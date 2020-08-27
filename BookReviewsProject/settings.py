@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     # our own apps
     'books',
     'reviews',
-    'home'
+    'home',
+    'cart'
 ]
 
 MIDDLEWARE = [

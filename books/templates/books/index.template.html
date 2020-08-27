@@ -17,10 +17,11 @@
     <ul>
       {% for each_book in all_books %}
       <li>
-      {% cloudinary each_book.cover %}
+      {% cloudinary each_book.cover class="book_cover" %}
       <a href="{% url 'book_details_route' book_id=each_book.id %}">{{each_book.title}}</a> 
             <a href="{% url 'update_book_route' book_id=each_book.id %}">Edit</a> 
-            <a href="{% url 'delete_book_route' book_id=each_book.id %}">Delete</a>      
+            <a href="{% url 'delete_book_route' book_id=each_book.id %}">Delete</a>    
+            <a href="{% url 'add_to_cart_route' book_id=each_book.id %}">Add to cart</a>  
       </li>
       {% endfor %}
     </ul>
