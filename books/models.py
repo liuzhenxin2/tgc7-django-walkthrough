@@ -34,6 +34,7 @@ class Book(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     authors = models.ManyToManyField('Author')
     owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    page_count = models.IntegerField(blank=False)
 
     # to-string
     def __str__(self):

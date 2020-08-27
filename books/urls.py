@@ -3,7 +3,7 @@ import books.views
 
 
 urlpatterns = [
-    path('', books.views.index),
+    path('', books.views.index, name='view_all_books'),
     path('publishers/', books.views.show_publisher),
     path('create/', books.views.create_book),
     path('publishers/create', books.views.create_publisher),

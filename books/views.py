@@ -1,17 +1,88 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
 from .models import Book, Publisher, Author
-from .forms import BookForm, PublisherForm, AuthorForm
+from .forms import BookForm, PublisherForm, AuthorForm, SearchForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 # Create your views here.
 
 
 def index(request):
     # create a query set that has all the books
     # a query set is like a cursor
-    all_books = Book.objects.all()
+
+    # SELECT * FROM books
+    # all_books = Book.objects.all()
+
+    # SELECT * FROM books WHERE title = "The Lord of the Rings"
+    # all_books = Book.objects.filter(title="Lord of the Rings")
+
+    # SELECT * FROM books where genre_id = 1
+    # all_books = Book.objects.filter(genre_id=1)
+
+    # SELECT * FROM books where title LIKE "%lord%"
+    # all_books = Book.objects.filter(title__icontains="Lord")
+
+    # SELECT * FROM books where title LIKE '%lord%' AND genre_id=1
+    # all_books = Book.objects.filter(
+    #     title__icontains='Lord'
+    # ).filter(
+    #     genre_id=1
+    # )
+
+    # SELECT * from books join books_tags on books.id = books_tags.book_id
+    # AND WHERE tag_id in (2)
+    # all_books = Book.objects.filter(tags__in=[2])
+
+    # SELECT * from books where page_count >= 100
+    # all_books = Book.objects.filter(page_count__gte=100)
+
+    # Using the Q Objects
+
+    # select all the books with page count greater or equal to 100
+    # AND must have the tag boring
+    # query = Q(page_count__gte=100)
+    # query = query and Q(tags__in=[2])
+
+    # select all the books with page counter greater or equal to 100
+    # OR have the tag boring
+    # query = Q(page_count__gte=100)
+    # query = query or Q(tags__in=[2])
+
+    # select all the books with `lord` in the title OR (page count greater
+    # than 100 and has the tag boring)
+
+    # have_lord_in_title = Q(title__icontains='lord')
+    # page_counter_greater_100 = Q(page_count__gt=100)
+    # have_tag_boring = Q(tags__in=[2])
+
+    # query = have_lord_in_title | (
+    #     page_counter_greater_100 & have_tag_boring)
+
+    # all_books = Book.objects.filter(query)
+
+    search_form = SearchForm(request.GET)
+
+    # create an empty Query object (i.e, always true)
+    # in SQL, it is: SELECT * from book WHERE 1
+    query = ~Q(pk__in=[])
+
+    if request.GET:
+        # get books that have the search terms in the title
+        if 'search_terms' in request.GET and request.GET['search_terms']:
+            query = query & Q(title__icontains=request.GET['search_terms'])
+
+        if 'genre' in request.GET and request.GET['genre']:
+            query = query & Q(genre=request.GET['genre'])
+
+        if 'tags' in request.GET and request.GET['tags']:
+            query = query & Q(tags__in=request.GET['tags'])
+
+    all_books = Book.objects.filter(query)
+
     return render(request, "books/index.template.html", {
-        'all_books': all_books
+        'all_books': all_books,
+        'search_form': search_form
     })
 
 
