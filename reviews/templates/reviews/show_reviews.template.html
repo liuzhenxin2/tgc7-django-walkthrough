@@ -1,0 +1,31 @@
+{% extends 'base.template.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h3>Search</h3>
+
+<form method="GET">
+{{form|crispy}}
+<input type="submit" class="btn btn-success btn-sm"/>
+</form>
+
+{% for r in all_reviews %}
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <h3>{{r.title}}</h3>
+        </div>
+        <div>
+            <p>Author: {{r.author.username}}</p>
+            <p>Posted on: {{r.date}}</p>
+            <p>Book: {{r.book.title}}</p>
+        </div>
+        <div>
+            {{r.content}}
+        </div>  
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}s
