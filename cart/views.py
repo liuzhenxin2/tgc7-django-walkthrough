@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponse
 from django.contrib import messages
 
 from books.models import Book
@@ -40,7 +40,7 @@ def show_cart(request):
     cart = request.session.get('shopping_cart', {})
     total = 0
     for key, item in cart.items():
-        total += float(item['cost'])
+        total += float(item['cost']) * int(item['qty'])
 
     return render(request, 'cart/view.template.html', {
         'cart': cart,
@@ -63,3 +63,21 @@ def remove_from_cart(request, book_id):
         messages.success(request, "Item not found in shopping cart")
 
     return redirect(reverse('show_cart_route'))
+
+
+def update_quantity(request, book_id):
+    if request.method == 'POST':
+        cart = request.session.get('shopping_cart', {})
+        quantity = request.POST['qty']  # same as request.form['qty'] in Flask
+        if book_id in cart:
+            cart[book_id]['qty'] = quantity
+            messages.success(request, "Quantity has been updated successfully")
+
+            # update the session
+            request.session['shopping_cart'] = cart
+
+        else:
+            messages.success(request, "Failed to update quantity")
+        return redirect(reverse('show_cart_route'))
+    else:
+        return HttpResponse("Invalid")
